@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión A1 · Taller IA · Elite Expert Academy</title>
+<style>
+  :root{
+    --navy-dark:#121B3A;
+    --navy:#1E2D6B;
+    --gold:#F5C842;
+    --grey-bg:#F7F7F9;
+    --text:#1A1A1A;
+    --muted:#5A5F73;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+    background:var(--grey-bg);
+    line-height:1.6;
+  }
+  header.site{
+    background:var(--navy-dark);
+    color:#fff;
+    padding:40px 24px;
+  }
+  .container{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  header.site .container{padding:0 24px;}
+  .brand{
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:bold;
+    margin-bottom:8px;
+  }
+  h1.title{
+    font-size:32px;
+    margin:0 0 6px 0;
+    color:#fff;
+  }
+  .subtitle{
+    color:#C9CEE8;
+    font-size:16px;
+    margin:0;
+  }
+  main{padding:40px 0 80px;}
+  section.block{
+    background:#fff;
+    border:1px solid #E5E5EA;
+    border-radius:8px;
+    padding:32px;
+    margin-bottom:28px;
+  }
+  .block-number{
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--navy);
+    font-weight:bold;
+    margin-bottom:6px;
+  }
+  .block h2{
+    font-size:24px;
+    margin:0 0 4px 0;
+    color:var(--navy-dark);
+  }
+  .block h3{
+    font-size:18px;
+    margin:18px 0 6px 0;
+    color:var(--navy);
+  }
+  .block p{
+    color:var(--muted);
+    margin:6px 0 14px 0;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--navy);
+    color:#fff;
+    text-decoration:none;
+    padding:10px 20px;
+    border-radius:6px;
+    font-weight:bold;
+    font-size:14px;
+  }
+  .btn:hover{background:var(--navy-dark);}
+  .btn.gold{
+    background:var(--gold);
+    color:var(--navy-dark);
+  }
+  .btn.gold:hover{background:#e0b438;}
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:16px;
+    margin-top:16px;
+  }
+  .card{
+    border:1px solid #E5E5EA;
+    border-radius:8px;
+    padding:18px;
+    text-align:center;
+  }
+  .card .icon{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:var(--navy);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:20px;
+    margin:0 auto 12px auto;
+  }
+  .card h4{
+    margin:0 0 4px 0;
+    font-size:16px;
+    color:var(--navy-dark);
+  }
+  .card .org{
+    font-size:12px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:8px;
+  }
+  .card p{font-size:13px; margin:0 0 12px 0; color:var(--muted);}
+  .prompt-box{
+    background:var(--grey-bg);
+    border-left:4px solid var(--gold);
+    border-radius:0 6px 6px 0;
+    padding:14px 18px;
+    font-size:14px;
+    color:var(--text);
+    margin:10px 0;
+    white-space:pre-wrap;
+    line-height:1.7;
+  }
+  .prompt-box.bad{border-left-color:#C8434E;}
+  .prompt-box.good{border-left-color:#1E7A34;}
+  .tag{
+    display:inline-block;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:4px;
+    margin-bottom:8px;
+  }
+  .tag.bad{background:#FBE6E8; color:#C8434E;}
+  .tag.good{background:#E6F4EA; color:#1E7A34;}
+  .tag.info{background:#EEF2FF; color:var(--navy);}
+  ul.checklist{padding-left:20px; color:var(--muted);}
+  ul.checklist li{margin-bottom:8px;}
+  footer.site{
+    background:var(--navy-dark);
+    color:#C9CEE8;
+    padding:32px 0;
+    font-size:13px;
+  }
+  footer.site .container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:20px;
+  }
+  footer.site .bio h4{
+    color:#fff;
+    margin:0 0 6px 0;
+  }
+  footer.site .meta{text-align:right;}
+  .timeline{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
+  }
+  .timeline span{
+    background:var(--grey-bg);
+    border:1px solid #E5E5EA;
+    border-radius:20px;
+    padding:6px 14px;
+    font-size:12px;
+    color:var(--navy);
+    font-weight:bold;
+  }
+  /* Agenda visual */
+  .agenda{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    margin-top:16px;
+  }
+  .agenda-row{
+    display:flex;
+    align-items:stretch;
+    gap:0;
+  }
+  .agenda-time{
+    min-width:80px;
+    font-size:13px;
+    font-weight:bold;
+    color:var(--navy);
+    padding:12px 16px 12px 0;
+    text-align:right;
+    border-right:3px solid var(--gold);
+    flex-shrink:0;
+  }
+  .agenda-content{
+    padding:12px 0 12px 20px;
+    font-size:14px;
+    color:var(--muted);
+  }
+  .agenda-content strong{
+    color:var(--text);
+    display:block;
+    margin-bottom:2px;
+  }
+  /* Tabla de leads */
+  .leads-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-top:16px;
+    overflow-x:auto;
+    display:block;
+  }
+  .leads-table th{
+    background:var(--navy);
+    color:#fff;
+    padding:8px 12px;
+    text-align:left;
+    font-size:12px;
+    letter-spacing:0.5px;
+    white-space:nowrap;
+  }
+  .leads-table td{
+    padding:8px 12px;
+    border-bottom:1px solid #E5E5EA;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .leads-table tr:nth-child(even) td{background:var(--grey-bg);}
+  /* Estructura de prompt visual */
+  .prompt-structure{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:14px;
+    margin-top:16px;
+  }
+  .prompt-part{
+    border:1px solid #E5E5EA;
+    border-radius:8px;
+    padding:16px;
+  }
+  .prompt-part .label{
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin-bottom:6px;
+  }
+  .prompt-part p{
+    font-size:13px;
+    margin:0;
+    color:var(--muted);
+  }
+  .prompt-part .example{
+    font-size:12px;
+    color:var(--text);
+    background:var(--grey-bg);
+    border-radius:4px;
+    padding:6px 10px;
+    margin-top:8px;
+    font-style:italic;
+  }
+  /* Comparación IAs */
+  .compare-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:16px;
+  }
+  @media(max-width:600px){
+    .compare-grid{grid-template-columns:1fr;}
+  }
+  .compare-col{
+    border:1px solid #E5E5EA;
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .compare-col .col-header{
+    padding:12px 16px;
+    font-weight:bold;
+    font-size:14px;
+    color:#fff;
+  }
+  .compare-col.chatgpt .col-header{background:#10A37F;}
+  .compare-col.claude .col-header{background:#D4754E;}
+  .compare-col .col-body{
+    padding:14px 16px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .compare-col .col-body ul{
+    padding-left:18px;
+    margin:0;
+  }
+  .compare-col .col-body li{
+    margin-bottom:6px;
+  }
+  /* Tarjeta de prompt para llevarse */
+  .kit-card{
+    background:var(--navy-dark);
+    color:#C9CEE8;
+    border-radius:8px;
+    padding:24px 28px;
+    margin-top:16px;
+  }
+  .kit-card h4{
+    color:var(--gold);
+    margin:0 0 4px 0;
+    font-size:15px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  .kit-card .kit-prompt{
+    background:rgba(255,255,255,0.06);
+    border-left:3px solid var(--gold);
+    border-radius:0 6px 6px 0;
+    padding:12px 16px;
+    font-size:13px;
+    margin:12px 0;
+    white-space:pre-wrap;
+    line-height:1.7;
+    color:#E8ECF8;
+  }
+  .kit-card .kit-label{
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:4px;
+    margin-top:16px;
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="brand">Vitaminas Tecnológicas · Capacitación IA</div>
+    <h1 class="title">Taller de IA Aplicada — Elite Expert Academy</h1>
+    <p class="subtitle">Sesión A1 · IA para Ventas · Grupo A — Comercial y Soporte · Ref. TEM-EEA-001-2026</p>
+    <div class="timeline">
+      <span>90 minutos</span>
+      <span>6 participantes</span>
+      <span>Virtual · Meet</span>
+      <span>Instructora: Liliana Bayona Castañeda</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- AGENDA -->
+  <section class="block">
+    <div class="block-number">AGENDA DE LA SESIÓN</div>
+    <h2>Estructura — 90 minutos</h2>
+    <p>Todo lo que ves aquí ocurre en vivo. Cada bloque tiene un entregable concreto.</p>
+    <div class="agenda">
+      <div class="agenda-row">
+        <div class="agenda-time">0:00</div>
+        <div class="agenda-content">
+          <strong>Kahoot de repaso — Sesión 0</strong>
+          PIN: 01004434 · 10 preguntas · ritmo rápido · 10 min
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-time">0:10</div>
+        <div class="agenda-content">
+          <strong>Configuración de ChatGPT y Claude</strong>
+          Personalización en ChatGPT · Projects en Claude · Demo + réplica en paralelo · 20 min
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-time">0:30</div>
+        <div class="agenda-content">
+          <strong>Prompt genérico vs. prompt situacional</strong>
+          Un ejemplo malo y uno bueno con datos del CSV · Comparación en vivo entre las dos IAs · 15 min
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-time">0:45</div>
+        <div class="agenda-content">
+          <strong>Práctica con el CSV de leads</strong>
+          Cada persona elige una fila → llena la estructura de prompt → ejecuta en ChatGPT y Claude → compara · 25 min
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-time">1:10</div>
+        <div class="agenda-content">
+          <strong>Edición del output + segunda vuelta</strong>
+          ¿Qué cambias y por qué? William: segunda iteración de prompt · 10 min
+        </div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-time">1:20</div>
+        <div class="agenda-content">
+          <strong>Cierre — Kit de prompts + compromiso</strong>
+          Tarjeta de prompt lista para usar esta semana · Cada uno declara cuántos leads va a trabajar con IA · 10 min
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERRAMIENTAS -->
+  <section class="block">
+    <div class="block-number">01 //</div>
+    <h2>Configuración — ChatGPT y Claude</h2>
+    <p>Antes de la práctica, configura cada herramienta para que "sepa" que trabajas en EEA. Esto elimina tener que explicar el contexto en cada prompt.</p>
+
+    <h3>ChatGPT — Personalización</h3>
+    <p>Ve a <strong>Configuración → Personalización → Instrucciones personalizadas</strong> y pega el siguiente texto en el campo "¿Qué deberías saber sobre mí?":</p>
+    <div class="prompt-box">Trabajo en el equipo comercial/soporte de Elite Expert Academy, una academia online de estética avanzada con presencia en Perú, Colombia, Bolivia, Venezuela y EE.UU. Atendemos leads que llegan por campañas de Meta Ads y webinars. Usamos WhatsApp como canal principal. Nuestros estados de lead son: No contesta, Seguimiento, Interesado, Alumna, Inválido, Seminario Siguiente, Compró.</div>
+
+    <h3>Claude — Project</h3>
+    <p>Crea un Project nuevo llamado "EEA Comercial" e incluye las siguientes instrucciones en la sección de instrucciones del proyecto:</p>
+    <div class="prompt-box">Soy parte del equipo de Elite Expert Academy (EEA), academia online de estética avanzada. Cuando me ayudes a redactar mensajes para leads o alumnos, usa siempre tono cálido, profesional y directo. El canal es WhatsApp. No uses saludos formales extensos ni cierres corporativos. Máximo 120 palabras por mensaje salvo que indique lo contrario.</div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">G</div>
+        <h4>ChatGPT</h4>
+        <div class="org">OpenAI</div>
+        <p>Primeros borradores, variaciones de mensaje y manejo de objeciones.</p>
+        <a class="btn" href="https://chatgpt.com" target="_blank">Abrir ChatGPT →</a>
+      </div>
+      <div class="card">
+        <div class="icon">C</div>
+        <h4>Claude</h4>
+        <div class="org">Anthropic</div>
+        <p>Redacción formal, ajuste de tono y mensajes de mayor longitud o precisión.</p>
+        <a class="btn" href="https://claude.ai" target="_blank">Abrir Claude →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CSV DE PRÁCTICA -->
+  <section class="block">
+    <div class="block-number">02 //</div>
+    <h2>CSV de práctica — Leads ficticios EEA</h2>
+    <p>Este archivo tiene la misma estructura del sheet que el equipo usa en el día a día. Los datos son inventados — ningún nombre, email o teléfono corresponde a personas reales. Úsalo con confianza para practicar en vivo.</p>
+    <p>Columnas: <strong>Fecha Registro · Campaña · Nombre · Apellido · Email · Teléfono · Agente · Estado · Notas de Seguimiento · Mensaje IA Generado</strong></p>
+
+    <table class="leads-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Campaña</th>
+          <th>Agente</th>
+          <th>Estado</th>
+          <th>Días sin contacto</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Andrea M.</td><td>Webinar Masterclass Corporal</td><td>William</td><td>No contesta</td><td>18</td><td>Interesada en el curso avanzado, no responde desde el webinar</td></tr>
+        <tr><td>2</td><td>Carla V.</td><td>P001_VD_Abril_William</td><td>Kassandra</td><td>Seguimiento</td><td>5</td><td>Pidió info de precios, dijo "lo pienso"</td></tr>
+        <tr><td>3</td><td>Lorena T.</td><td>Organico-Seminario POS Gaby</td><td>Ivana</td><td>Interesado</td><td>2</td><td>Quiere empezar en julio, tiene dudas sobre modalidad</td></tr>
+        <tr><td>4</td><td>María F.</td><td>Webinar Masterclass Corporal</td><td>William</td><td>Seguimiento</td><td>10</td><td>Vio el webinar completo, no responde mensajes</td></tr>
+        <tr><td>5</td><td>Sofía R.</td><td>P001_VD_Abril_William</td><td>Kassandra</td><td>No contesta</td><td>22</td><td>Lead frío, sin respuesta desde registro</td></tr>
+        <tr><td>6</td><td>Patricia G.</td><td>Organico-Seminario POS Gaby</td><td>Ivana</td><td>Seguimiento</td><td>7</td><td>Tiene objeción de precio, pidió cuotas</td></tr>
+        <tr><td>7</td><td>Valeria C.</td><td>Webinar Masterclass Corporal</td><td>William</td><td>Interesado</td><td>1</td><td>Muy interesada, espera confirmación de fecha de inicio</td></tr>
+        <tr><td>8</td><td>Diana L.</td><td>P001_VD_Abril_William</td><td>Kassandra</td><td>Seminario Siguiente</td><td>14</td><td>No pudo inscribirse esta ronda, quiere la próxima</td></tr>
+        <tr><td>9</td><td>Beatriz H.</td><td>Organico-Seminario POS Gaby</td><td>Ivana</td><td>No contesta</td><td>30</td><td>Lead muy frío, último intento antes de archivar</td></tr>
+        <tr><td>10</td><td>Isabel M.</td><td>Webinar Masterclass Corporal</td><td>William</td><td>Seguimiento</td><td>3</td><td>Preguntó por certificación, quedó en revisar el temario</td></tr>
+        <tr><td>11</td><td>Claudia S.</td><td>P001_VD_Abril_William</td><td>Kassandra</td><td>Interesado</td><td>4</td><td>Comparando con otra academia, pide diferencial</td></tr>
+        <tr><td>12</td><td>Natalia P.</td><td>Organico-Seminario POS Gaby</td><td>Ivana</td><td>No contesta</td><td>16</td><td>Registrada vía orgánico, nunca respondió el primer mensaje</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ESTRUCTURA DEL PROMPT -->
+  <section class="block">
+    <div class="block-number">03 //</div>
+    <h2>Estructura del prompt situacional</h2>
+    <p>El nivel intermedio no es escribir "mejor" — es agregar los datos del lead antes de promtear. Así la IA genera un mensaje que sirve sin edición mayor.</p>
+
+    <div class="prompt-structure">
+      <div class="prompt-part">
+        <div class="label">Contexto</div>
+        <p>¿Quién eres, qué vende EEA, cuál es el canal?</p>
+        <div class="example">"Soy agente comercial de EEA, academia online de estética avanzada. El canal es WhatsApp."</div>
+      </div>
+      <div class="prompt-part">
+        <div class="label">Datos del lead</div>
+        <p>Campaña de origen, estado actual, días sin contacto, última nota relevante.</p>
+        <div class="example">"Lead: Carla V. | Campaña: ads de abril | Estado: Seguimiento | 5 días sin respuesta | Nota: dijo 'lo pienso'"</div>
+      </div>
+      <div class="prompt-part">
+        <div class="label">Instrucción</div>
+        <p>Qué tipo de mensaje necesitas y cuál es el objetivo.</p>
+        <div class="example">"Escribe un mensaje de seguimiento para WhatsApp que responda la objeción 'lo pienso' sin ser insistente."</div>
+      </div>
+      <div class="prompt-part">
+        <div class="label">Formato</div>
+        <p>Tono, extensión, estructura del mensaje.</p>
+        <div class="example">"Tono cálido y directo. Máximo 80 palabras. Sin saludos formales."</div>
+      </div>
+    </div>
+
+    <h3>Prompt genérico vs. prompt situacional</h3>
+
+    <span class="tag bad">Genérico — resultado predecible y plano</span>
+    <div class="prompt-box bad">"Escríbeme un mensaje para reactivar un lead que no contesta."</div>
+
+    <span class="tag good">Situacional — resultado usable esta tarde</span>
+    <div class="prompt-box good">Soy agente comercial de Elite Expert Academy, academia online de estética avanzada. El canal de contacto es WhatsApp.
+
+Lead: Andrea M. | Campaña: Webinar Masterclass Corporal | Estado: No contesta | 18 días sin respuesta | Nota: se interesó en el curso avanzado durante el webinar pero no respondió desde entonces.
+
+Escribe un mensaje de reactivación para WhatsApp. El objetivo es retomar el contacto sin sonar insistente, recordarle su interés y abrir una conversación. Tono cálido y directo. Máximo 90 palabras. Sin saludos formales extensos.</div>
+  </section>
+
+  <!-- COMPARACIÓN ChatGPT vs Claude -->
+  <section class="block">
+    <div class="block-number">04 //</div>
+    <h2>Comparación en vivo — ChatGPT vs Claude</h2>
+    <p>Ejecuta el mismo prompt situacional en las dos herramientas. Observa qué diferencias aparecen en tono, extensión y naturalidad.</p>
+
+    <div class="compare-grid">
+      <div class="compare-col chatgpt">
+        <div class="col-header">ChatGPT — qué observar</div>
+        <div class="col-body">
+          <ul>
+            <li>¿Respeta el límite de palabras?</li>
+            <li>¿El tono suena a WhatsApp o a correo corporativo?</li>
+            <li>¿Menciona datos del lead o genera algo genérico?</li>
+            <li>¿La primera frase engancha o es relleno?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="compare-col claude">
+        <div class="col-header">Claude — qué observar</div>
+        <div class="col-body">
+          <ul>
+            <li>¿La redacción es más formal o más conversacional?</li>
+            <li>¿Usa los datos del lead de forma visible?</li>
+            <li>¿El cierre invita a responder o solo informa?</li>
+            <li>¿Qué cambiarías antes de enviarlo?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3>Criterio para decidir cuál usar</h3>
+    <ul class="checklist">
+      <li><strong>ChatGPT:</strong> primeros borradores rápidos, variaciones de mensaje, ideas de apertura para leads fríos.</li>
+      <li><strong>Claude:</strong> mensajes donde el tono importa más, textos más largos, revisión de lo que ya escribiste.</li>
+      <li>No hay una IA "mejor" — hay una IA más adecuada para cada tarea. Parte de la práctica de hoy es desarrollar ese criterio.</li>
+    </ul>
+  </section>
+
+  <!-- TRES SITUACIONES DE PRÁCTICA -->
+  <section class="block">
+    <div class="block-number">05 //</div>
+    <h2>Práctica — Tres situaciones reales</h2>
+    <p>Cada participante elige una fila del CSV y aplica el prompt que corresponda a su situación. A continuación, las tres estructuras de prompt completas para usar directamente.</p>
+
+    <div style="background:var(--navy-dark);color:var(--gold);border-radius:6px;padding:12px 18px;font-size:14px;font-weight:bold;margin-bottom:20px;">Del CSV de la sección 02, elige una fila. Copia el nombre, campaña, estado, días sin contacto y nota en los campos en corchetes del prompt que corresponda a tu situación. Pégalo en ChatGPT y en Claude.</div>
+
+    <h3>Situación A — Primer mensaje post-webinar</h3>
+    <span class="tag info">Para leads en estado: Interesado · Seguimiento (1–3 días)</span>
+    <div class="prompt-box good">Soy agente comercial de Elite Expert Academy, academia online de estética avanzada. Canal: WhatsApp.
+
+Lead: [NOMBRE] | Campaña: [CAMPAÑA] | Estado: [ESTADO] | [X] días desde el registro | Nota: [COPIAR NOTA DEL CSV].
+
+Escribe el primer mensaje de contacto por WhatsApp para esta persona. El objetivo es presentarme, recordar su interés en el webinar y abrir la conversación con una pregunta que invite a responder. Tono cálido, cercano y sin presión. Máximo 80 palabras. Sin saludos formales.</div>
+
+    <h3>Situación B — Respuesta a "lo pienso"</h3>
+    <span class="tag info">Para leads en estado: Seguimiento · con objeción en notas</span>
+    <div class="prompt-box good">Soy agente comercial de Elite Expert Academy, academia online de estética avanzada. Canal: WhatsApp.
+
+Lead: [NOMBRE] | Estado: Seguimiento | [X] días desde último contacto | Nota: [COPIAR NOTA DEL CSV — mencionar objeción específica].
+
+Esta persona dijo "lo pienso" o pidió tiempo. Escribe un mensaje de seguimiento para WhatsApp que responda esa objeción sin sonar insistente, que refuerce el valor del programa y que abra espacio a preguntas. Tono empático y directo. Máximo 100 palabras.</div>
+
+    <h3>Situación C — Reactivación de lead frío</h3>
+    <span class="tag info">Para leads en estado: No contesta · 15 días o más sin respuesta</span>
+    <div class="prompt-box good">Soy agente comercial de Elite Expert Academy, academia online de estética avanzada. Canal: WhatsApp.
+
+Lead: [NOMBRE] | Estado: No contesta | [X] días sin respuesta | Campaña de origen: [CAMPAÑA] | Nota: [COPIAR NOTA DEL CSV].
+
+Escribe un mensaje de reactivación para WhatsApp. El objetivo es retomar el contacto después de [X] días de silencio. No recordar que no respondió — abrir una conversación nueva con algo de valor o una pregunta directa. Tono natural, no comercial. Máximo 80 palabras.</div>
+  </section>
+
+  <!-- EDICIÓN DEL OUTPUT -->
+  <!-- SITUACIÓN D — SOPORTE -->
+  <section class="block">
+    <div class="block-number">05D //</div>
+    <h2>Situación D — Área de Soporte</h2>
+    <p>Las situaciones A, B y C son de perfil comercial. Estas dos corresponden a las tareas más frecuentes del área de Soporte.</p>
+
+    <h3>Situación D1 — Mensaje de bienvenida y acceso a plataforma</h3>
+    <span class="tag info">Para alumnas recién inscritas · WhatsApp · tarea diaria del área de Soporte</span>
+    <div class="prompt-box good">Trabajo en soporte de Elite Expert Academy, academia online de estética avanzada. Canal: WhatsApp.
+
+Alumna nueva: [NOMBRE] | Curso inscrito: [NOMBRE DEL CURSO] | Fecha de inicio: [FECHA].
+
+Escribe un mensaje de bienvenida por WhatsApp que salude a la alumna por su nombre, confirme su inscripción, le indique que recibirá acceso a la plataforma Systeme y explique brevemente qué debe hacer al ingresar (buscar su curso y revisar el calendario de clases). Tono cálido y claro. Máximo 100 palabras. Sin tecnicismos.</div>
+
+    <h3>Situación D2 — Respuesta a alumna que no encuentra sus clases</h3>
+    <span class="tag info">Consulta más frecuente en soporte: "las alumnas preguntan diariamente cómo encontrar las clases o por qué no pueden ingresar"</span>
+    <div class="prompt-box good">Trabajo en soporte de Elite Expert Academy. Canal: WhatsApp.
+
+Alumna: [NOMBRE] | Problema: no encuentra sus clases en la plataforma / no puede ingresar a [NOMBRE DEL CURSO] | Plataforma: Systeme.
+
+Escribe una respuesta de WhatsApp que acuse recibo de la consulta, transmita calma, y solicite los datos necesarios para verificar su acceso (correo de registro y nombre completo). Tono paciente y servicial. Máximo 80 palabras.</div>
+
+    <p style="font-size:13px; color:var(--muted); margin-top:16px;">El mismo principio aplica: copien los datos reales de la alumna antes de usar el prompt. Revisen que el nombre y el curso estén correctos en el output antes de enviar.</p>
+  </section>
+
+  <!-- TRASPASO DE MEMORIA ENTRE IAS -->
+  <section class="block">
+    <div class="block-number">RECURSO EXTRA //</div>
+    <h2>Cómo pasar el contexto de ChatGPT a Claude (y viceversa)</h2>
+    <p>Ninguna IA recuerda conversaciones entre sesiones ni comparte memoria con otra IA. Si empezaste un trabajo en ChatGPT y quieres continuarlo en Claude, el contexto se traspasa manualmente. Así se hace:</p>
+
+    <h3>De ChatGPT a Claude</h3>
+    <ol style="color:var(--muted); padding-left:20px; line-height:2;">
+      <li>En ChatGPT, copia el prompt que usaste y el output que generó.</li>
+      <li>Abre Claude (o el Project "EEA Comercial").</li>
+      <li>Pega este bloque al inicio de tu mensaje:</li>
+    </ol>
+    <div class="prompt-box">Contexto previo generado en ChatGPT:
+
+PROMPT QUE USÉ: [PEGAR PROMPT ORIGINAL]
+
+RESULTADO QUE ME DIO: [PEGAR EL OUTPUT]
+
+Ahora necesito que [INDICAR QUÉ QUIERES — por ejemplo: "mejores el tono", "acortes el mensaje", "reescribas el cierre"].</div>
+
+    <h3>De Claude a ChatGPT</h3>
+    <ol style="color:var(--muted); padding-left:20px; line-height:2;">
+      <li>En Claude, copia el texto generado.</li>
+      <li>Abre ChatGPT y pega este bloque al inicio:</li>
+    </ol>
+    <div class="prompt-box">Tengo este borrador generado por otra IA:
+
+[PEGAR EL TEXTO DE CLAUDE]
+
+Necesito que [INDICAR QUÉ QUIERES — por ejemplo: "generes 3 variaciones con distinto tono", "lo hagas más corto y directo", "agregues una pregunta de cierre"].</div>
+
+    <h3>Regla práctica para este equipo</h3>
+    <ul class="checklist">
+      <li><strong>ChatGPT primero</strong> cuando necesitas varias versiones rápidas o ideas de apertura.</li>
+      <li><strong>Claude después</strong> para afinar tono, acortar o mejorar la precisión del mensaje final.</li>
+      <li>Siempre lee el output antes de enviarlo — verifica que el nombre, curso o dato específico estén correctos.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <div class="block-number">06 //</div>
+    <h2>Editar el output — nivel intermedio en acción</h2>
+    <p>La IA propone, tú decides. Estos son los tres errores más comunes que aparecen en los outputs y cómo corregirlos en 30 segundos.</p>
+    <ul class="checklist">
+      <li><strong>Tono demasiado formal:</strong> reemplaza "estimada" por el nombre, elimina el saludo de correo, acorta las frases. Pide a la IA: "Hazlo más conversacional, como si fuera un mensaje de WhatsApp real".</li>
+      <li><strong>Datos genéricos:</strong> la IA inventó información que no estaba en el prompt. Revisa que todos los datos del mensaje existan en la ficha del lead. Si no están, son inventados.</li>
+      <li><strong>Cierre débil:</strong> "quedo a tu disposición" no genera respuesta. Pide: "Cambia el cierre por una pregunta directa que invite a responder en una sola frase".</li>
+    </ul>
+
+    <h3>Para William — segunda iteración</h3>
+    <p>Toma el output que generó la IA y conviértelo en un prompt mejorado para la siguiente vuelta. Pregunta clave: ¿qué le faltó al prompt original para que el output fuera exactamente lo que necesitabas?</p>
+    <div class="prompt-box">El mensaje anterior está bien pero [PROBLEMA ESPECÍFICO]. Reescríbelo ajustando [CAMBIO CONCRETO]. Mantén el mismo contexto y límite de palabras.</div>
+  </section>
+
+  <!-- KIT DE PROMPTS -->
+  <section class="block">
+    <div class="block-number">07 //</div>
+    <h2>Kit de prompts — para usar esta semana</h2>
+    <p>Copia estas tres estructuras a tu teléfono o a una nota. Antes de escribirle a un lead, completa los campos en corchetes con los datos reales del sheet y pégalo en ChatGPT o Claude.</p>
+
+    <div class="kit-card">
+      <h4>Primer contacto post-webinar</h4>
+      <div class="kit-prompt">Soy agente de EEA. Canal: WhatsApp.
+Lead: [NOMBRE] | Campaña: [CAMPAÑA] | Estado: [ESTADO] | [X] días | Nota: [NOTA].
+Escribe el primer mensaje de contacto. Presentarme + recordar interés + pregunta abierta. Cálido, sin presión. Máx. 80 palabras.</div>
+
+      <div class="kit-label">Respuesta a "lo pienso"</div>
+      <div class="kit-prompt">Soy agente de EEA. Canal: WhatsApp.
+Lead: [NOMBRE] | Objeción: [LO QUE DIJO] | [X] días desde contacto.
+Responder objeción sin presionar. Reforzar valor. Abrir espacio a preguntas. Empático, directo. Máx. 100 palabras.</div>
+
+      <div class="kit-label">Reactivación de lead frío</div>
+      <div class="kit-prompt">Soy agente de EEA. Canal: WhatsApp.
+Lead: [NOMBRE] | [X] días sin respuesta | Campaña: [CAMPAÑA] | Nota: [NOTA].
+Retomar contacto sin mencionar el silencio. Algo de valor o pregunta directa. Natural, no comercial. Máx. 80 palabras.</div>
+    </div>
+  </section>
+
+  <!-- COMPROMISO DE CIERRE -->
+  <section class="block">
+    <div class="block-number">08 //</div>
+    <h2>Compromiso de esta semana</h2>
+    <p>Antes de salir de la sesión, cada participante declara en voz alta:</p>
+    <ul class="checklist">
+      <li>¿Cuántos leads voy a trabajar con IA esta semana? (número concreto)</li>
+      <li>¿Qué situación voy a usar primero — A, B o C?</li>
+      <li>¿En qué herramienta — ChatGPT o Claude?</li>
+    </ul>
+    <p>En la Sesión A2 revisamos resultados reales: qué funcionó, qué no, y cómo ajustar los prompts. Traer al menos un ejemplo de mensaje enviado.</p>
+  </section>
+
+  <!-- PRÓXIMA SESIÓN -->
+  <section class="block">
+    <div class="block-number">PRÓXIMA SESIÓN</div>
+    <h2>Sesión A2 — IA para gestión y reporte</h2>
+    <p>Resumen semanal de estado de leads · Correo formal de traspaso Comercial → Académico · Nota de incidencia de alumna para Soporte. Herramienta principal: Claude.</p>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <div class="bio">
+      <h4>Liliana Bayona Castañeda</h4>
+      <p style="max-width:480px;">Ingeniera de Sistemas · Magíster en Gestión de la Información (UPV España, becaria PRONABEC) · Docente universitaria UCV · Especialista en Calidad e Información (ISO 9001, Power BI, SharePoint).</p>
+    </div>
+    <div class="meta">
+      Vitaminas Tecnológicas<br>
+      @vitaminas_tecnologicas<br>
+      administracion@vitaminas-tecnologicas.com<br>
+      TEM-EEA-001-2026 · Sesión A1
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
